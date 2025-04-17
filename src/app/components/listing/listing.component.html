@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+
+<p>listing works!</p>
+<div class="table-container">
+    <h2 class="table-title">User Data</h2>
+    
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.quantity }}</td>
+          <td>{{ user.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!users.length" class="no-data">No data found.</div>
+  </div>
+  
