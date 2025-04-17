@@ -1,0 +1,12 @@
+<app-navbar></app-navbar>
+<p>products works!</p>
+<div class="main-container">
+    <div class="products-container">
+        <div class="item" *ngFor="let product of products">
+            <img [src]=product.image alt="" >
+            <div class="addToCartbtn">
+                <button class="cartBtn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
