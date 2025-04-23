@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<p>listing works!</p>
+<!-- <p>listing works!</p> -->
 <div class="table-container">
     <h2 class="table-title">User Data</h2>
     
@@ -11,14 +11,16 @@
           <th>Name</th>
           <th>Quantity</th>
           <th>Price</th>
+          <th>Image</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of users; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.quantity }}</td>
-          <td>{{ user.price }}</td>
+          <td data-label="#">{{ i + 1 }}</td>
+          <td data-label="Name">{{ user.name }}</td>
+          <td data-label="Quantity">{{ user.quantity }}</td>
+          <td data-label="Price">{{ user.price }}</td>
+          <td data-label="Image"><img [src]="user.image" height="90px" width="90px" ></td>
         </tr>
       </tbody>
     </table>
