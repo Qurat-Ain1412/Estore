@@ -1,14 +1,13 @@
-<app-navbar></app-navbar>
 <div class="form-container">
   <h2>Add New Product</h2>
-  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+  <form (ngSubmit)="updateProduct(prod._id, prod)" #productForm="ngForm">
     <div class="form-group">
       <label for="name">Product Name</label>
       <input
         type="text"
         id="name"
         name="name"
-        [(ngModel)]="product.name"
+        [(ngModel)]="prod.name"
         required
       />
     </div>
@@ -19,7 +18,7 @@
         type="number"
         id="quantity"
         name="quantity"
-        [(ngModel)]="product.quantity"
+        [(ngModel)]="prod.quantity"
         required
       />
     </div>
@@ -30,7 +29,7 @@
         type="number"
         id="price"
         name="price"
-        [(ngModel)]="product.price"
+        [(ngModel)]="prod.price"
         required
       />
     </div>

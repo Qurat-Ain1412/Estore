@@ -1,23 +1,27 @@
-<!-- <p>navbar works!</p> -->
 <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>eStore</span>
-    <span class="example-spacer"></span>
-    <div class="page-options">
-        <ul>
-            <li><a routerLink="/" routerLinkActive="active">Home</a></li>
-            <li><a routerLink="/about" routerLinkActive="active">About</a></li>
-            <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
-            <li><a routerLink="/add-product" routerLinkActive="active">Create Product</a></li>
-            <li><a routerLink="/listing" routerLinkActive="active">Listing</a></li>
-
-        </ul>
-    </div>
-    <span class="example-spacer"></span>
-    <!-- <button mat-raised-button><img src="../assets/cart-shopping-solid.svg" alt=""></button> -->
-    <button class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-  </mat-toolbar>
-
-  <!-- <app-navbar></app-navbar> -->
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>eStore</span>
+  <span class="example-spacer"></span>
+  <div class="page-options">
+    <ul>
+      <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+      <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+      <li>
+        <a routerLink="/add-product" routerLinkActive="active"
+          >Create Product</a
+        >
+      </li>
+      <li><a routerLink="/listing" routerLinkActive="active">Listing</a></li>
+    </ul>
+  </div>
+  <span class="example-spacer"></span>
+  <!-- <button mat-raised-button><img src="../assets/cart-shopping-solid.svg" alt=""></button> -->
+  <button class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+</mat-toolbar>

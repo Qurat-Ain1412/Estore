@@ -1,85 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { NavbarComponent } from '../navbar/navbar.component';
 import { ProductsService } from '../../services/products.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ProductDetailDialogComponent } from '../../product-detail-dialog/product-detail-dialog.component';
+import { Products } from '../../interface/products';
 
 @Component({
   selector: 'app-products',
-  imports: [NavbarComponent, CommonModule],
+  imports: [NavbarComponent, CommonModule, MatButtonModule, MatDialogModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrl: './products.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsComponent {
-//   products = [
-//     { image: "assets/Books1.jpg", name: "Book 1" },
-//     { image: "assets/Books2.jpg", name: "Book 2" },
-//     { image: "assets/Books3.jpg", name: "Book 3" },
-//     { image: "assets/Books1.jpg", name: "Book 4" },
-//     { image: "assets/Books2.jpg", name: "Book 5" },
-//     { image: "assets/Books3.jpg", name: "Book 6" },
-//     { image: "assets/Books1.jpg", name: "Book 7" },
-//     { image: "assets/Books2.jpg", name: "Book 8" },
-//     { image: "assets/Books3.jpg", name: "Book 9" }
-// ];
+  products: Products[] = [];
+  isLoading: boolean = true;
+  errorMessage: string = '';
 
-// constructor(private productService: ProductsService) {}
+  constructor(private productService: ProductsService) {}
 
-products: any[] = []; // Initialize as empty array
-isLoading: boolean = true;
-errorMessage: string = '';
+  ngOnInit(): void {
+    this.loadProducts();
+    this.isLoading = false;
+    const prod = this.productService.getProducts().subscribe((products) => {
+      this.products = products.map((product) => ({
+        ...product,
+        image: product.image,
+      }));
+      console.log(products);
+    });
+    console.log('product: ', this.products);
+  }
 
-constructor(private productService: ProductsService) {}
+  loadProducts(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
 
-ngOnInit(): void {
-  this.loadProducts();
-  const prod = this.productService.getProducts().subscribe((products) => {
-    this.products = products.map(product => ({
-      ...product,
-      image: product.image // Full URL
-      
-    })
-  );
-  });
-  console.log("product: ", this.products)
-  // console.log("image: ", this.pr);
-}
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products.map((product) => ({
+        ...product,
+        image: product.image.startsWith('http')
+          ? product.image
+          : `https://localhost:3000/${product.image}`,
+      }));
+    });
+  }
 
-loadProducts(): void {
-  this.isLoading = true;
-  this.errorMessage = '';
-  
-  this.productService.getProducts().subscribe((products) => {
-    this.products = products.map(product => ({
-      ...product,
-      image: product.image.startsWith('http')
-        ? product.image
-        : `https://localhost:3000/${product.image}`
-    }));
-    
-  });
-}
+  readonly dialog = inject(MatDialog);
 
-productDetails(productId: number): void {
-  this.productService.getProduct(productId).subscribe({
-    next: (product) => {
-      console.log('Product details:', product);
-      // Here you can:
-      // 1. Navigate to a details page
-      // 2. Show a modal with details
-      // 3. Or any other action you want
-    },
-    error: (err) => {
-      console.error('Error fetching product details:', err);
-    }
-  });
-}
+  openDialog() {
+    const dialogRef = this.dialog.open(ProductDetailDialogComponent);
 
-// productDetails(productId: number) {
-//   this.productService.getProduct(productId).subscribe({
-//     next: (products) => {
-      
-//     }
-//   })
-// }
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
+  closeDialog() {
+    this.dialog.closeAll();
+  }
+
+  productDetails(prod: Products): void {
+    console.log(prod);
+    console.log(prod._id);
+
+    const detail = this.productService.getProduct(prod._id).subscribe({
+      next: (product) => {
+        console.log('Product details:', product);
+        this.dialog.open(ProductDetailDialogComponent, {
+          data: product,
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching product details:', err);
+      },
+    });
+    console.log('details:', detail);
+  }
 }
