@@ -5,30 +5,38 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient,) { }
-
-  http = inject(HttpClient)
+  http = inject(HttpClient);
 
   getProducts() {
-    return this.http.get<Products[]>('http://localhost:3000/api/products/list')
+    return this.http.get<Products[]>('http://localhost:3000/api/products/list');
   }
 
-  getProduct(id: any) {
-    return this.http.get<Products>(`http://localhost:3000/api/products/${id}`)
+  getProduct(id: string) {
+    return this.http.get<Products>(`http://localhost:3000/api/products/${id}`);
   }
 
-  addProduct(formData: FormData) : Observable<Products> {
-    return this.http.post<Products>('http://localhost:3000/api/products/add', formData)
+  addProduct(formData: FormData): Observable<Products> {
+    return this.http.post<Products>(
+      'http://localhost:3000/api/products/add',
+      formData
+    );
   }
 
-  // productsListing() {
-  //   let httpHeaders = new HttpHeaders({
-  //     'content-Type': 'application/json'
-  //   });
-  //   return this.httpClient.get('http://localhost:3000/api/products/list', {headers: httpHeaders})
-  // }
+  editProduct(id: string, formData: FormData): Observable<Products> {
+    return this.http.put<Products>(
+      `http://localhost:3000/api/products/update/${id}`,
+      formData
+    );
+  }
+
+  deleteProduct(id: string) {
+    return this.http.delete<Products>(
+      `http://localhost:3000/api/products/delete/${id}`
+    );
+  }
 }

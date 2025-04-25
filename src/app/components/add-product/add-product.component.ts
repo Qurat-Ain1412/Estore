@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { NavbarComponent } from '../navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
@@ -9,14 +9,15 @@ import { Products } from '../../interface/products';
   selector: 'app-add-product',
   imports: [NavbarComponent, FormsModule, CommonModule],
   templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css'
+  styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
   product: Products = {
+    _id: '',
     name: '',
     quantity: 0,
     price: 0,
-    image: ''
+    image: '',
   };
 
   selectedImageFile!: File;
@@ -44,11 +45,17 @@ export class AddProductComponent {
     this.productService.addProduct(formData).subscribe({
       next: (res) => {
         console.log('Product added:', res);
-        // Optionally reset form here
+        this.product = {
+          _id: '',
+          name: '',
+          quantity: 0,
+          price: 0,
+          image: '',
+        };
       },
       error: (err) => {
         console.error('Upload failed:', err);
-      }
+      },
     });
   }
 }
