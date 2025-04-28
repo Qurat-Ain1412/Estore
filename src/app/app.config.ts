@@ -4,10 +4,16 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 // routes
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin-ui',
     title: 'Home',
     loadComponent: () =>
       import('./components/home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'dashboard',
+    title: 'Dashboard',
+    loadComponent: () =>
+      import('./components/user/user-dashboard/user-dashboard.component').then((m) => m.UserDashboardComponent),
   },
   {
     path: 'products',
@@ -41,6 +47,7 @@ const routes: Routes = [
         (m) => m.ListingComponent
       ),
   },
+
 ];
 
 export const appConfig: ApplicationConfig = {
